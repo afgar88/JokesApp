@@ -9,7 +9,7 @@ interface JokeService {
     @GET(JOKES_PATH)
     suspend fun getAllJokes(): Response<List<Jokes>>
 
-    @GET(RAMDOM_JOKES_PATH)
+    @GET(RANDOM_JOKES_PATH)
     suspend fun getRandomJoke(): Response<Jokes>
 
 
@@ -17,7 +17,7 @@ interface JokeService {
         const val BASE_URL = "https://api.icndb.com/"
         private const val JOKES_PATH = "jokes"
 
-        private const val RAMDOM_JOKES_PATH = "jokes/random"
+        private const val RANDOM_JOKES_PATH = "jokes/random"
 
     }
 }
