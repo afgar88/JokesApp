@@ -3,6 +3,11 @@ package com.example.jokesapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.jokesapp.Network.JokeService
+import com.example.jokesapp.Network.JokesRepository
+import com.example.jokesapp.Network.JokesRepositoryImp
+import com.example.jokesapp.database.DatabaseRepository
+import com.example.jokesapp.database.DatabaseRepositoryImp
+import com.example.jokesapp.database.JokesDAO
 import com.example.jokesapp.database.JokesDatabase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,9 +39,13 @@ val networkModule = module {
         .build()
         .create(JokeService::class.java)
 
+    fun provideJokesRepo(networkService: JokeService): JokesRepository =
+        JokesRepositoryImp(networkService)
+
     single { providesLogginInterceptor() }
     single { providesNetworkServices(get()) }
     single { providesOkHttpCLient(get()) }
+    single { provideJokesRepo(get()) }
 }
 
 val applicationModule = module {
@@ -47,6 +56,15 @@ val applicationModule = module {
             "jokes-db"
         ).build()
 
+    fun providesJokesDao(jokesDatabase: JokesDatabase): JokesDAO =
+        jokesDatabase.getJokesDao()
+
+    fun providesDatabaseRepository(databaseDAO: JokesDAO): DatabaseRepository =
+        DatabaseRepositoryImp(databaseDAO)
+
+
     single { providesJokesDatabase(androidContext()) }
+    single { providesJokesDao(get()) }
+    single { providesDatabaseRepository(get()) }
 
 }
