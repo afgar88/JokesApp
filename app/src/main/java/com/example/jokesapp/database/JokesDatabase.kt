@@ -14,16 +14,20 @@ abstract class JokesDatabase : RoomDatabase() {
 @Dao
 interface JokesDAO {
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertJokes(newJokes: List<Jokes>)
 
     @Query("SELECT* FROM jokes")
-    suspend fun getJokes():List<Jokes>
+    suspend fun getJokes(): List<Jokes>
 
     @Query("SELECT * FROM jokes WHERE id=:searchId")
-    suspend fun getJokesById(searchId: Int):Jokes
+    suspend fun getJokesById(searchId: Int): Jokes
+
+    @Query("SELECT * FROM jokes ORDER BY RAND() LIMIT 1;")
+    suspend fun getRandomJoke(): Jokes
 
     @Delete
-    suspend fun deleteAllJokes()
-
+    suspend fun deleteAllJokes(jokes: List<Jokes>)
 
 
 }
