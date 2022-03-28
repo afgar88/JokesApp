@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/jokes_nav"
-    app:startDestination="@id/characterJokeFragment">
+    app:startDestination="@id/randomJokeFragment">
 
     <fragment
         android:id="@+id/characterJokeFragment"
@@ -20,4 +20,9 @@
         android:name="com.example.jokesapp.views.NeverEndingListFragment"
         android:label="fragment_never_ending_list"
         tools:layout="@layout/fragment_never_ending_list" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.jokesapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

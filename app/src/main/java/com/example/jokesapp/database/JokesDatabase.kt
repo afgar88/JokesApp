@@ -7,6 +7,7 @@ import com.example.jokesapp.model.Jokes
     entities = [Jokes::class],
     version = 1
 )
+@TypeConverters(Converter::class)
 abstract class JokesDatabase : RoomDatabase() {
     abstract fun getJokesDao(): JokesDAO
 }
@@ -14,16 +15,20 @@ abstract class JokesDatabase : RoomDatabase() {
 @Dao
 interface JokesDAO {
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertJokes(newJokes: List<Jokes>)
 
     @Query("SELECT* FROM jokes")
-    suspend fun getJokes():List<Jokes>
+    suspend fun getJokes(): List<Jokes>
 
     @Query("SELECT * FROM jokes WHERE id=:searchId")
-    suspend fun getJokesById(searchId: Int):Jokes
+    suspend fun getJokesById(searchId: Int): Jokes
+
+    @Query("SELECT * FROM jokes")
+    suspend fun getRandomJoke(): Jokes
 
     @Delete
-    suspend fun deleteAllJokes()
-
+    suspend fun deleteAllJokes(jokes: List<Jokes>)
 
 
 }

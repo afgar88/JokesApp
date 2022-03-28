@@ -3,6 +3,8 @@ package com.example.jokesapp.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.jokesapp.database.Converter
 import com.google.gson.annotations.SerializedName
 
 @Entity
