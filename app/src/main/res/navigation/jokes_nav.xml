@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/jokes_nav"
+    app:startDestination="@id/randomJokeFragment">
+
+    <fragment
+        android:id="@+id/characterJokeFragment"
+        android:name="com.example.jokesapp.views.CharacterJokeFragment"
+        android:label="fragment_character_joke"
+        tools:layout="@layout/fragment_character_joke" />
+    <fragment
+        android:id="@+id/randomJokeFragment"
+        android:name="com.example.jokesapp.views.RandomJokeFragment"
+        android:label="fragment_random_joke"
+        tools:layout="@layout/fragment_random_joke" />
+    <fragment
+        android:id="@+id/neverEndingListFragment"
+        android:name="com.example.jokesapp.views.NeverEndingListFragment"
+        android:label="fragment_never_ending_list"
+        tools:layout="@layout/fragment_never_ending_list" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.jokesapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>
