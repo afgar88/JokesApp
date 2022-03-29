@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/jokes_nav"
-    app:startDestination="@id/randomJokeFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/characterJokeFragment"
@@ -11,18 +11,20 @@
         android:label="fragment_character_joke"
         tools:layout="@layout/fragment_character_joke" />
     <fragment
-        android:id="@+id/randomJokeFragment"
-        android:name="com.example.jokesapp.views.RandomJokeFragment"
-        android:label="fragment_random_joke"
-        tools:layout="@layout/fragment_random_joke" />
-    <fragment
         android:id="@+id/neverEndingListFragment"
         android:name="com.example.jokesapp.views.NeverEndingListFragment"
         android:label="fragment_never_ending_list"
         tools:layout="@layout/fragment_never_ending_list" />
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.jokesapp.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.jokesapp.views.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_neverEndingListFragment"
+            app:destination="@id/neverEndingListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_characterJokeFragment"
+            app:destination="@id/characterJokeFragment" />
+    </fragment>
 </navigation>
