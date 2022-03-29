@@ -12,12 +12,16 @@ interface JokeService {
     @GET(RANDOM_JOKES_PATH)
     suspend fun getRandomJoke(): Response<Jokes>
 
+    @GET(Companion.CUSTOM_JOKES_PATH)
+    suspend fun getCustomJoke():Response<Jokes>
 
     companion object {
         const val BASE_URL = "https://api.icndb.com/"
         private const val JOKES_PATH = "jokes"
 
         private const val RANDOM_JOKES_PATH = "jokes/random"
+
+        private const val CUSTOM_JOKES_PATH=""
 
     }
 }
