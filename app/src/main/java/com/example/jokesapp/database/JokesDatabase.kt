@@ -2,9 +2,10 @@ package com.example.jokesapp.database
 
 import androidx.room.*
 import com.example.jokesapp.model.Jokes
+import com.example.jokesapp.model.Value
 
 @Database(
-    entities = [Jokes::class],
+    entities = [Value::class],
     version = 1
 )
 @TypeConverters(Converter::class)
@@ -16,19 +17,19 @@ abstract class JokesDatabase : RoomDatabase() {
 interface JokesDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertJokes(newJokes: List<Jokes>)
+    suspend fun insertJokes(newJokes: List<Value>)
 
-    @Query("SELECT* FROM jokes")
-    suspend fun getJokes(): List<Jokes>
+    @Query("SELECT* FROM value")
+    suspend fun getJokes(): List<Value>
 
-    @Query("SELECT * FROM jokes WHERE id=:searchId")
-    suspend fun getJokesById(searchId: Int): Jokes
+    @Query("SELECT * FROM value WHERE id=:searchId")
+    suspend fun getJokesById(searchId: Int): Value
 
-    @Query("SELECT * FROM jokes")
-    suspend fun getRandomJoke(): Jokes
+    @Query("SELECT * FROM value")
+    suspend fun getRandomJoke(): Value
 
     @Delete
-    suspend fun deleteAllJokes(jokes: List<Jokes>)
+    suspend fun deleteAllJokes(jokes: List<Value>)
 
 
 }
