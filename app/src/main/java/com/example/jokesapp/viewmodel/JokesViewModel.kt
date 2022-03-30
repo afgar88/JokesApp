@@ -41,7 +41,7 @@ class JokesViewModel(
                 }
             } catch (e: Exception) {
                 _jokes.postValue(JokesState.ERROR(e))
-           //     loadFromDB()
+                //     loadFromDB()
             }
         }
     }
@@ -49,7 +49,7 @@ class JokesViewModel(
     private suspend fun loadFromDB() {
         try {
             val localData = databaseRepo.getAllJokes()
-        //    _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
+            //    _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
         } catch (e: Exception) {
             _jokes.postValue(JokesState.ERROR(e))
         }
@@ -62,13 +62,36 @@ class JokesViewModel(
                 val response = networkRepo.getRandomJoke()
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        Log.d("Broma1",it.toString())
-                      //  databaseRepo.insertJokes(arrayListOf(it))
-                       // val localData = databaseRepo.getRandomJokes()
-                        val jok: Value =it.value
-                       _jokes.postValue(JokesState.SUCCESS(jok))
+                        Log.d("Broma1", it.toString())
+                        //  databaseRepo.insertJokes(arrayListOf(it))
+                        // val localData = databaseRepo.getRandomJokes()
+                        val jok: Value = it.value
+                        _jokes.postValue(JokesState.SUCCESS(jok))
 
-                        Log.d("Broma",_jokes.toString())
+                        Log.d("Broma", _jokes.toString())
+                    } ?: throw Exception("Response in null")
+                } else {
+                    throw Exception("No successful response")
+                }
+            } catch (e: Exception) {
+                _jokes.postValue(JokesState.ERROR(e))
+            }
+        }
+    }
+
+    fun getCustomJoke(firstName: String, lastName: String) {
+        viewModelScope.launch(ioDispatcher) {
+            try {
+                val response = networkRepo.getCustomJoke(firstName, lastName)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        Log.d("Broma1", it.toString())
+                        //  databaseRepo.insertJokes(arrayListOf(it))
+                        // val localData = databaseRepo.getRandomJokes()
+                        val jok: Value = it.value
+                        _jokes.postValue(JokesState.SUCCESS(jok))
+
+                        Log.d("Broma", _jokes.toString())
                     } ?: throw Exception("Response in null")
                 } else {
                     throw Exception("No successful response")
