@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.jokesapp.R
 import com.example.jokesapp.adapter.JokesAdapter
 import com.example.jokesapp.databinding.FragmentNeverEndingListBinding
@@ -30,7 +31,7 @@ class NeverEndingListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        var explicit= jokesViewModel.explicit
+        var explicit = jokesViewModel.explicit
 
         binding.infiniteJokes.apply {
             layoutManager =
@@ -49,6 +50,23 @@ class NeverEndingListFragment : BaseFragment() {
                     var data2 = data as? JokesList
 
                     data2?.let { jokesAdapter.setNewJokes(it.value) }
+
+                    binding.infiniteJokes.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                            super.onScrolled(recyclerView, dx, dy)
+                            if (!binding.infiniteJokes.canScrollVertically(1)) {
+
+
+
+                                    Log.d("EndList","hahahaha")
+
+                                    binding.infiniteJokes.adapter = jokesAdapter
+
+
+
+                            }
+                        }
+                    })
                 }
                 is JokesState.ERROR -> {
                     Toast.makeText(
@@ -64,7 +82,7 @@ class NeverEndingListFragment : BaseFragment() {
 
 
         return binding.root
+
+
     }
-
-
 }

@@ -7,4 +7,5 @@ sealed class JokesState {
     class SUCCESS<T>(val joke: T,  isLocalData:Boolean=false):JokesState()
     class ERROR(val error:Throwable):JokesState()
 
+
 }
