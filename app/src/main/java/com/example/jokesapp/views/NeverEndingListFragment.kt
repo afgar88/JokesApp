@@ -1,60 +1,68 @@
 package com.example.jokesapp.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jokesapp.R
+import com.example.jokesapp.adapter.JokesAdapter
+import com.example.jokesapp.databinding.FragmentNeverEndingListBinding
+import com.example.jokesapp.model.Jokes
+import com.example.jokesapp.model.JokesList
+import com.example.jokesapp.model.Value
+import com.example.jokesapp.model.ValueX
+import com.example.jokesapp.utils.JokesState
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NeverEndingListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NeverEndingListFragment : BaseFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val binding by lazy {
+        FragmentNeverEndingListBinding.inflate(layoutInflater)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_never_ending_list, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NeverEndingListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NeverEndingListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding.infiniteJokes.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = jokesAdapter
+        }
+        jokesViewModel.getJokes()
+        jokesViewModel.allJokes.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is JokesState.LOADING -> {
+                    Toast.makeText(requireContext(), "loading...", Toast.LENGTH_LONG).show()
+                }
+                is JokesState.SUCCESS<*> -> {
+                    Log.d("DATA_ENTER", state.toString())
+                    var data = state.joke
+                    var data2 = data as? JokesList
+
+                    data2?.let { jokesAdapter.setNewJokes(it.value) }
+                }
+                is JokesState.ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        state.error.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
+
+        }
+
+
+
+        return binding.root
     }
+
+
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.jokesapp.Network.JokesRepository
 import com.example.jokesapp.database.DatabaseRepository
 import com.example.jokesapp.model.Jokes
+import com.example.jokesapp.model.JokesList
 import com.example.jokesapp.model.Value
 import com.example.jokesapp.utils.JokesState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -35,6 +36,8 @@ class JokesViewModel(
 //                        databaseRepo.insertJokes(it)
 //                        val localData = databaseRepo.getAllJokes()
 //                        _jokes.postValue(JokesState.SUCCESS(localData))
+                       // val jok: JokesList = it
+                        _jokes.postValue(JokesState.SUCCESS(it))
                     } ?: throw Exception("Response in null")
                 } else {
                     throw Exception("No successful response")
@@ -46,14 +49,14 @@ class JokesViewModel(
         }
     }
 
-    private suspend fun loadFromDB() {
-        try {
-            val localData = databaseRepo.getAllJokes()
-            //    _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
-        } catch (e: Exception) {
-            _jokes.postValue(JokesState.ERROR(e))
-        }
-    }
+//    private suspend fun loadFromDB() {
+//        try {
+//      //      val localData = databaseRepo.getAllJokes()
+//            //    _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
+//        } catch (e: Exception) {
+//            _jokes.postValue(JokesState.ERROR(e))
+//        }
+//    }
 
 
     fun getRandomJoke() {
