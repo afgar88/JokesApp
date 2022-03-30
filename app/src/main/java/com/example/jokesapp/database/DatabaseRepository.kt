@@ -8,6 +8,7 @@ interface DatabaseRepository {
     suspend fun insertJokes(jokes: List<Value>)
     suspend fun getAllJokes(): List<Value>
     suspend fun getRandomJokes(): Value
+
 }
 
 class DatabaseRepositoryImp(
