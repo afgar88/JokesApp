@@ -30,12 +30,14 @@ class NeverEndingListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        var explicit= jokesViewModel.explicit
+
         binding.infiniteJokes.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = jokesAdapter
         }
-        jokesViewModel.getJokes()
+        jokesViewModel.getJokes(explicit)
         jokesViewModel.allJokes.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is JokesState.LOADING -> {

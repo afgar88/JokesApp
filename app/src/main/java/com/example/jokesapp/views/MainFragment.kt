@@ -20,12 +20,20 @@ class MainFragment : BaseFragment() {
     private val binding by lazy {
         FragmentMainBinding.inflate(layoutInflater)
     }
-    // var jok: Value? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding.checkBoxExplicit.setOnClickListener {
+            if (binding.checkBoxExplicit.isChecked) {
+                jokesViewModel.explicit = ""
+
+            } else {
+                jokesViewModel.explicit = "explicit"
+            }
+        }
 
         jokesViewModel.getRandomJoke()
         jokesViewModel.allJokes.observe(viewLifecycleOwner) { state ->
@@ -35,14 +43,15 @@ class MainFragment : BaseFragment() {
                 }
                 is JokesState.SUCCESS<*> -> {
 
-                    var jok: Value = state.joke as Value
+
+                    var jok: Value? = state.joke as? Value
                     binding.btnRandomJoke.setOnClickListener {
                         jokesViewModel.getRandomJoke()
                         val alertDialog = AlertDialog.Builder(context)
                         alertDialog.apply {
                             setIcon(R.drawable.ic_baseline_tag_faces_24)
                             setTitle("JOKE")
-                            setMessage(jok.joke)
+                            setMessage(jok?.joke)
                             setPositiveButton("HAHAHA") { _, _ ->
                             }
                         }.create().show()
@@ -69,6 +78,11 @@ class MainFragment : BaseFragment() {
 
         return binding.root
 
+    }
+
+    override fun onResume() {
+        jokesViewModel.getRandomJoke()
+        super.onResume()
     }
 
 

@@ -9,7 +9,9 @@ import retrofit2.http.Query
 interface JokeService {
 
     @GET(JOKES_PATH)
-    suspend fun getAllJokes(): Response<JokesList>
+    suspend fun getAllJokes(
+        @Query("exclude") exclude:String
+    ): Response<JokesList>
 
     @GET(LIST_JOKES_PATH)
     suspend fun getRandomJoke(): Response<Jokes>

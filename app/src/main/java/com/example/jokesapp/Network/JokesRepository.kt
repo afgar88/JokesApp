@@ -6,7 +6,7 @@ import retrofit2.Response
 
 
 interface JokesRepository {
-   suspend fun getAllJokes(): Response<JokesList>
+   suspend fun getAllJokes(exclude:String): Response<JokesList>
     suspend fun getRandomJoke(): Response<Jokes>
     suspend fun getCustomJoke(firstName: String, lastName: String): Response<Jokes>
 }
@@ -15,8 +15,8 @@ interface JokesRepository {
 class JokesRepositoryImp(
     private val jokeService: JokeService
 ) : JokesRepository {
-    override suspend fun getAllJokes(): Response<JokesList> =
-        jokeService.getAllJokes()
+    override suspend fun getAllJokes(exclude:String): Response<JokesList> =
+        jokeService.getAllJokes(exclude)
 
     override suspend fun getRandomJoke(): Response<Jokes> =
         jokeService.getRandomJoke()

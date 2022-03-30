@@ -21,16 +21,16 @@ class JokesViewModel(
     private val databaseRepo: DatabaseRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
-
+   var explicit:String=""
 
     val _jokes: MutableLiveData<JokesState> = MutableLiveData(JokesState.LOADING)
 
     val allJokes: LiveData<JokesState> get() = _jokes
 
-    fun getJokes() {
+    fun getJokes(exclude:String) {
         viewModelScope.launch(ioDispatcher) {
             try {
-                val response = networkRepo.getAllJokes()
+                val response = networkRepo.getAllJokes(exclude)
                 if (response.isSuccessful) {
                     response.body()?.let {
 //                        databaseRepo.insertJokes(it)
@@ -103,6 +103,10 @@ class JokesViewModel(
                 _jokes.postValue(JokesState.ERROR(e))
             }
         }
+    }
+
+    fun explicit(){
+
     }
 
     override fun onCleared() {
