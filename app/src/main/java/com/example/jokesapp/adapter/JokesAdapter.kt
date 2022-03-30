@@ -30,6 +30,12 @@ class JokesAdapter(
         value.addAll(newJoke)
         notifyDataSetChanged()
     }
+
+    fun setMoreJokes(newJoke: List<ValueX>) {
+        value.addAll(newJoke)
+        notifyDataSetChanged()
+    }
+
 }
 
 class JokesViewHolder(
