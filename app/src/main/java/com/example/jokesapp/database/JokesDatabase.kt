@@ -19,8 +19,8 @@ interface JokesDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertJokes(newJokes: List<Value>)
 
-//    @Query("SELECT* FROM value")
-//    suspend fun getJokes(): List<JokesList>
+    @Query("SELECT* FROM value")
+    suspend fun getJokes(): List<Value>
 
     @Query("SELECT * FROM value WHERE id=:searchId")
     suspend fun getJokesById(searchId: Int): Value

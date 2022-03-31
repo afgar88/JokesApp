@@ -33,30 +33,31 @@ class JokesViewModel(
                 val response = networkRepo.getAllJokes(exclude)
                 if (response.isSuccessful) {
                     response.body()?.let {
-//                        databaseRepo.insertJokes(it)
-//                        val localData = databaseRepo.getAllJokes()
-//                        _jokes.postValue(JokesState.SUCCESS(localData))
-                       // val jok: JokesList = it
-                        _jokes.postValue(JokesState.SUCCESS(it))
+                        databaseRepo.insertJokes(it.value)
+                        val localData = databaseRepo.getAllJokes()
+                        Log.d("DataBase",localData.toString())
+                        _jokes.postValue(JokesState.SUCCESS(localData))
+//                        val jok: JokesList = it
+//                        _jokes.postValue(JokesState.SUCCESS(it))
                     } ?: throw Exception("Response in null")
                 } else {
                     throw Exception("No successful response")
                 }
             } catch (e: Exception) {
                 _jokes.postValue(JokesState.ERROR(e))
-                //     loadFromDB()
+                     loadFromDB()
             }
         }
     }
 
-//    private suspend fun loadFromDB() {
-//        try {
-//      //      val localData = databaseRepo.getAllJokes()
-//            //    _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
-//        } catch (e: Exception) {
-//            _jokes.postValue(JokesState.ERROR(e))
-//        }
-//    }
+    private suspend fun loadFromDB() {
+        try {
+            val localData = databaseRepo.getAllJokes()
+                _jokes.postValue(JokesState.SUCCESS(localData, isLocalData = true))
+        } catch (e: Exception) {
+            _jokes.postValue(JokesState.ERROR(e))
+        }
+    }
 
 
     fun getRandomJoke() {
@@ -105,9 +106,6 @@ class JokesViewModel(
         }
     }
 
-    fun explicit(){
-
-    }
 
     override fun onCleared() {
         super.onCleared()

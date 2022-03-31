@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jokesapp.databinding.FragmentNeverEndingListBinding
 import com.example.jokesapp.model.JokesList
+import com.example.jokesapp.model.Value
 import com.example.jokesapp.utils.JokesState
 
 
@@ -33,6 +34,7 @@ class NeverEndingListFragment : BaseFragment() {
             adapter = jokesAdapter
         }
         jokesViewModel.getJokes(explicit)
+        Log.d("Jokes", jokesViewModel.getJokes(explicit).toString())
         jokesViewModel.allJokes.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is JokesState.LOADING -> {
@@ -40,22 +42,24 @@ class NeverEndingListFragment : BaseFragment() {
                 }
                 is JokesState.SUCCESS<*> -> {
                     Log.d("DATA_ENTER", state.toString())
-                    var data = state.joke
-                    var data2 = data as? JokesList
+                    when (state.joke) {
+                        is List<*> -> {
+                            jokesAdapter.setNewJokes(state.joke as List<Value>)
+                        }
 
-                    data2?.let { jokesAdapter.setNewJokes(it.value) }
+                    }
 
-                    binding.infiniteJokes.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                    binding.infiniteJokes.addOnScrollListener(object :
+                        RecyclerView.OnScrollListener() {
                         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                             super.onScrolled(recyclerView, dx, dy)
                             if (!binding.infiniteJokes.canScrollVertically(1)) {
 
 
+                                Log.d("EndList", "hahahaha")
 
-                                    Log.d("EndList","hahahaha")
-
-                                    binding.infiniteJokes.adapter = jokesAdapter
-
+                                binding.infiniteJokes.adapter = jokesAdapter
 
 
                             }
