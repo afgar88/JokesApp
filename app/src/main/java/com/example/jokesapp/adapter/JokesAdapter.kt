@@ -4,13 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jokesapp.databinding.JokeItemBinding
-import com.example.jokesapp.model.Jokes
 import com.example.jokesapp.model.Value
-import com.example.jokesapp.model.ValueX
 
 
 class JokesAdapter(
-    private val value: MutableList<ValueX> = mutableListOf(),
+    private val value: MutableList<Value> = mutableListOf(),
 
     ) : RecyclerView.Adapter<JokesViewHolder>() {
 
@@ -25,13 +23,13 @@ class JokesAdapter(
 
     override fun getItemCount(): Int = value.size
 
-    fun setNewJokes(newJoke: List<ValueX>) {
+    fun setNewJokes(newJoke: List<Value>) {
         value.clear()
         value.addAll(newJoke)
         notifyDataSetChanged()
     }
 
-    fun setMoreJokes(newJoke: List<ValueX>) {
+    fun setMoreJokes(newJoke: List<Value>) {
         value.addAll(newJoke)
         notifyDataSetChanged()
     }
@@ -42,7 +40,7 @@ class JokesViewHolder(
     private val binding: JokeItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(value: ValueX) {
+    fun bind(value: Value) {
         binding.jokeText.text = value.joke
 
     }
