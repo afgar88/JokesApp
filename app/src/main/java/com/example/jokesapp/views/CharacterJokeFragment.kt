@@ -42,7 +42,7 @@ class CharacterJokeFragment : BaseFragment() {
                 }
                 is JokesState.SUCCESS<*> -> {
 
-                    var jok: Value = state.joke as Value
+                    val jok = state.joke as Value
                     binding.btnCustomJoke.setOnClickListener {
                         if (getName()) {
                             jokesViewModel.getCustomJoke(firstName!!, lastName!!)
@@ -72,14 +72,12 @@ class CharacterJokeFragment : BaseFragment() {
             }
         }
 
-
-
         return binding.root
     }
 
     private fun getName(): Boolean {
         if (binding.editCustomJoke.text.isNotEmpty()) {
-            var name = binding.editCustomJoke.text.split("\\p{Space}".toRegex()).toTypedArray()
+            val name = binding.editCustomJoke.text.split("\\p{Space}".toRegex()).toTypedArray()
             if (name.size == 2) {
                 firstName = name[0]
                 lastName = name[1]
