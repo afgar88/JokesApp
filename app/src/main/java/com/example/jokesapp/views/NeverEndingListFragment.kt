@@ -26,7 +26,7 @@ class NeverEndingListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        var explicit = jokesViewModel.explicit
+        val explicit = jokesViewModel.explicit
 
         binding.infiniteJokes.apply {
             layoutManager =
@@ -46,22 +46,15 @@ class NeverEndingListFragment : BaseFragment() {
                         is List<*> -> {
                             jokesAdapter.setNewJokes(state.joke as List<Value>)
                         }
-
                     }
-
 
                     binding.infiniteJokes.addOnScrollListener(object :
                         RecyclerView.OnScrollListener() {
                         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                             super.onScrolled(recyclerView, dx, dy)
                             if (!binding.infiniteJokes.canScrollVertically(1)) {
-
-
                                 Log.d("EndList", "hahahaha")
-
                                 binding.infiniteJokes.adapter = jokesAdapter
-
-
                             }
                         }
                     })
@@ -77,10 +70,6 @@ class NeverEndingListFragment : BaseFragment() {
 
         }
 
-
-
         return binding.root
-
-
     }
 }

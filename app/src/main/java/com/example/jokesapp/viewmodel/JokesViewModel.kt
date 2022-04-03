@@ -21,7 +21,8 @@ class JokesViewModel(
     private val databaseRepo: DatabaseRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
-   var explicit:String=""
+
+   var explicit = ""
 
     val _jokes: MutableLiveData<JokesState> = MutableLiveData(JokesState.LOADING)
 
@@ -37,8 +38,6 @@ class JokesViewModel(
                         val localData = databaseRepo.getAllJokes()
                         Log.d("DataBase",localData.toString())
                         _jokes.postValue(JokesState.SUCCESS(localData))
-//                        val jok: JokesList = it
-//                        _jokes.postValue(JokesState.SUCCESS(it))
                     } ?: throw Exception("Response in null")
                 } else {
                     throw Exception("No successful response")
@@ -67,8 +66,6 @@ class JokesViewModel(
                 if (response.isSuccessful) {
                     response.body()?.let {
                         Log.d("Broma1", it.toString())
-                        //  databaseRepo.insertJokes(arrayListOf(it))
-                        // val localData = databaseRepo.getRandomJokes()
                         val jok: Value = it.value
                         _jokes.postValue(JokesState.SUCCESS(jok))
 
@@ -90,8 +87,6 @@ class JokesViewModel(
                 if (response.isSuccessful) {
                     response.body()?.let {
                         Log.d("Broma1", it.toString())
-                        //  databaseRepo.insertJokes(arrayListOf(it))
-                        // val localData = databaseRepo.getRandomJokes()
                         val jok: Value = it.value
                         _jokes.postValue(JokesState.SUCCESS(jok))
 
@@ -104,10 +99,5 @@ class JokesViewModel(
                 _jokes.postValue(JokesState.ERROR(e))
             }
         }
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
     }
 }

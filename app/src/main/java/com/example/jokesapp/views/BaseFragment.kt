@@ -14,12 +14,3 @@ open class BaseFragment : Fragment() {
         JokesAdapter()
     }
 }
-
-//    protected val giveawaysAdapter by lazy {
-//        GiveawayAdapter {
-//            giveawaysViewModel.selectedCurrentGiveAway=it
-//            findNavController().navigate(
-//                R.id.detailsFragment
-//            )
-//        }
-//    }
